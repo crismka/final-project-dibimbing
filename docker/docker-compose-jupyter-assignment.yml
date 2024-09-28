@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  dibimbing-dataeng-jupyter:
+    container_name: ${JUPYTER_CONTAINER_NAME_ASSIGNMENT}
+    hostname: ${JUPYTER_CONTAINER_NAME_ASSIGNMENT}
+    image: dataeng-dibimbing/jupyter
+    environment:
+      - JUPYTER_ALLOW_INSECURE_WRITES=true
+    ports:
+      - ${JUPYTER_PORT_ASSIGNMENT}:8888
+      - 4040:4040
+      - 4041:4041
+    volumes:
+      - ../:/resources
+      - ../notebooks:/home/jovyan/
+
+networks:
+  default:
+    name: assignment-network
+    external: true
