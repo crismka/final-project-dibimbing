@@ -33,9 +33,9 @@ spark = SparkSession.builder \
 path_csv_datasource = os.getenv('CSV_DATASOURCE')
 goodread_books_data_df = spark.read.csv(f"{path_csv_datasource}", header=True)
 
-goodread_books_data_df.show(5)
+# goodread_books_data_df.show(5)
 
-# goodread_books_data_df.printSchema()
+goodread_books_data_df.printSchema()
 
 
 # #configure the jdbc_properties
