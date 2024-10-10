@@ -14,6 +14,7 @@ services:
     volumes:
       - ../spark-scripts:/spark-scripts
       - ../scripts:/scripts
+      - ../data:/data
     ports:
       - ${SPARK_MASTER_UI}:8080
       - ${SPARK_MASTER_PORT}:7077
@@ -34,12 +35,10 @@ services:
     volumes:
       - ../spark-scripts:/spark-scripts
       - ../scripts:/scripts
+      - ../data:/data
     depends_on:
       - dibimbing-project-spark-master
 
-  # dibimbing-dataeng-spark-worker-2:
-  #   <<: *worker_default
-  #   container_name: ${SPARK_WORKER_CONTAINER_NAME}-2
 
 networks:
   default:

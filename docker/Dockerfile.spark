@@ -17,7 +17,5 @@ RUN pip install \
     kafka-python==2.0.2 \
     faker==18.9.0
 
-# Create temp directory with appropriate permissions
-# RUN chmod 777 /spark-scripts/ 
 COPY ./.env /opt/app/.env
 

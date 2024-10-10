@@ -26,4 +26,4 @@ RUN pip install \
 
 COPY --chown=airflow:root ./dags /opt/airflow/dags
 
-# RUN chmod 777 /scripts/ 
+
