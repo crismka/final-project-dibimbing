@@ -25,29 +25,7 @@ docker-build:
 	@docker build -t project-dibimbing/jupyter -f ./docker/Dockerfile.jupyter .
 	@echo '==========================================================='
 
-# docker-build-arm:
-# 	@echo '__________________________________________________________'
-# 	@echo 'Building Docker Images ...'
-# 	@echo '__________________________________________________________'
-# 	@docker network inspect dataeng-network >/dev/null 2>&1 || docker network create dataeng-network
-# 	@echo '__________________________________________________________'
-# 	@docker build -t dataeng-dibimbing/spark -f ./docker/Dockerfile.spark .
-# 	@echo '__________________________________________________________'
-# 	@docker build -t dataeng-dibimbing/airflow -f ./docker/Dockerfile.airflow-arm .
-# 	@echo '__________________________________________________________'
-# 	@docker build -t dataeng-dibimbing/jupyter -f ./docker/Dockerfile.jupyter .
-# 	@echo '==========================================================='
 
-# jupyter:
-# 	@echo '__________________________________________________________'
-# 	@echo 'Creating Jupyter Notebook Cluster at http://localhost:${JUPYTER_PORT} ...'
-# 	@echo '__________________________________________________________'
-# 	@docker compose -f ./docker/docker-compose-jupyter.yml --env-file .env up -d
-# 	@echo 'Created...'
-# 	@echo 'Processing token...'
-# 	@sleep 20
-# 	@docker logs ${JUPYTER_CONTAINER_NAME} 2>&1 | grep '\?token\=' -m 1 | cut -d '=' -f2
-# 	@echo '==========================================================='
 
 spark:
 	@echo '__________________________________________________________'
@@ -56,19 +34,6 @@ spark:
 	@docker compose -f ./docker/docker-compose-spark.yml --env-file .env up -d
 	@echo '==========================================================='
 
-# spark-submit-test:
-# 	@docker exec ${SPARK_WORKER_CONTAINER_NAME}-1 \
-# 		spark-submit \
-# 		--master spark://${SPARK_MASTER_HOST_NAME}:${SPARK_MASTER_PORT} \
-# 		/spark-scripts/spark-example.py
-
-# spark-submit-airflow-test:
-# 	@docker exec ${AIRFLOW_WEBSERVER_CONTAINER_NAME} \
-# 		spark-submit \
-# 		--master spark://${SPARK_MASTER_HOST_NAME}:${SPARK_MASTER_PORT} \
-# 		--conf "spark.standalone.submit.waitAppCompletion=false" \
-# 		--conf "spark.ui.enabled=false" \
-# 		/spark-scripts/spark-example.py
 
 airflow:
 	@echo '__________________________________________________________'
@@ -78,7 +43,6 @@ airflow:
 	@echo '==========================================================='
 
 postgres: postgres-create postgres-create-warehouse 
-# postgres-create-table postgres-ingest-csv
 
 postgres-create:
 	@docker compose -f ./docker/docker-compose-postgres.yml --env-file .env up -d
@@ -92,19 +56,6 @@ postgres-create:
 	@sleep 5
 	@echo '==========================================================='
 
-postgres-create-table:
-	@echo '__________________________________________________________'
-	@echo 'Creating tables...'
-	@echo '_________________________________________'
-	@docker exec -it ${POSTGRES_CONTAINER_NAME} psql -U ${POSTGRES_USER} -d ${POSTGRES_DW_DB} -f sql/ddl-goodread-books.sql
-	@echo '==========================================================='
-
-postgres-ingest-csv:
-	@echo '__________________________________________________________'
-	@echo 'Ingesting CSV...'
-	@echo '_________________________________________'
-	@docker exec -it ${POSTGRES_CONTAINER_NAME} psql -U ${POSTGRES_USER} -d ${POSTGRES_DW_DB} -f sql/ingest-goodread-books.sql
-	@echo '==========================================================='
 
 postgres-create-warehouse:
 	@echo '__________________________________________________________'
