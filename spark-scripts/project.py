@@ -59,7 +59,7 @@ schema = StructType([
 
 goodreads_df = spark.read.csv(f"{path_csv_datasource}", header=True, schema=schema)
 
-# Remove unnecessary columns 'isbn' and 'isbn13' from the DataFrame
+# Remove unnecessary columns isbn and isbn13 from the DataFrame
 goodreads_drop_isbn_isbn13_df = goodreads_df.drop("isbn", "isbn13")
 
 # Filter records with valid average ratings and non-zero ratings count, remove duplicates
